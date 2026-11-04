@@ -1,0 +1,24 @@
+// Salin seluruh isi ke prisma/schema.prisma pada proyek latihan.
+// Konfigurasi ini mengikuti Prisma 6.19.0 pada panduan lab hari 2.
+// npm install --save-dev --save-exact prisma@6.19.0
+// npm install --save-exact @prisma/client@6.19.0
+// npx prisma validate
+// npx prisma db push
+// npx prisma generate
+// db push menyinkronkan tabel latihan tanpa membuat riwayat migrasi.
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Barang {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  harga     Int
+  stok      Int
+  createdAt DateTime @default(now())
+}

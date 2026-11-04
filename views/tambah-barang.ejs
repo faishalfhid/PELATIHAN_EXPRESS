@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tambah barang</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container mt-5">
+  <h2>Tambah barang</h2>
+  <form action="/barang/tambah" method="POST">
+    <label for="nama" class="form-label">Nama barang</label>
+    <input id="nama" type="text" name="nama" required class="form-control mb-2">
+    <label for="harga" class="form-label">Harga dalam rupiah</label>
+    <input id="harga" type="number" name="harga" min="0" max="2147483647" step="1" required class="form-control mb-2">
+    <label for="stok" class="form-label">Stok</label>
+    <input id="stok" type="number" name="stok" min="0" max="2147483647" step="1" required class="form-control mb-2">
+    <button type="submit" class="btn btn-success">Simpan</button>
+    <a href="/barang" class="btn btn-secondary">Batal</a>
+  </form>
+  </div>
+</body>
+
+</html>
