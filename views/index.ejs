@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+  <%- include('partials/navbar') %>
+  <div class="d-flex flex-column align-items-center">
+    <div class="card" style="width: 50rem;">
+      <img src="/images/coding.jpg" height="300" width="100" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h1>Halaman Home</h1>
+        <p class="card-text">Saya sedang belajar ExpressJS</p>
+        <a href="#" class="btn btn-primary">Halo, <%= namaPengguna %>!</a>
+      </div>
+  </div>
+  </div>
+</body>
+
+</html>

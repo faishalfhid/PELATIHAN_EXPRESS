@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data Karyawan</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container mt-5">
+    <table class="table table-striped table-bordered border-warning">
+        <thead>
+            <tr class="table-warning">
+                <th>ID</th>
+                <th>Nama Karyawan</th>
+                <th>Divisi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% listKaryawan.forEach(function(karyawan){ %>
+            <tr>
+                <td><%= karyawan.id %></td>
+                <td><%= karyawan.nama %></td>
+                <td><%= karyawan.divisi %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+    </table>
+    <a type="button" href="/" class="btn btn-warning">Kembali</a>
+    </div>
+</body>
+</html>
