@@ -140,6 +140,64 @@ app.post(
   },
 );
 
+app.get("/barang/edit/:id", cekIdBarang, async (req, res, next) => {
+  try {
+    const barang = await prisma.barang.findUnique({
+      where: { id: req.barangId },
+    });
+    if (!barang) {
+      return res.status(404).type("text/plain").send("Barang tidak ditemukan.");
+    }
+    res.render("edit-barang", { b: barang });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post(
+  "/barang/edit/:id",
+  cekIdBarang,
+  validasiBarang,
+  cekDataBarang,
+  async (req, res, next) => {
+    try {
+      const { nama, harga, stok } = req.body;
+      await prisma.barang.update({
+        where: { id: req.barangId },
+        data: { nama, harga: Number(harga), stok: Number(stok) },
+      });
+      res.redirect("/barang");
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+app.post("/barang/hapus/:id", cekIdBarang, async (req, res, next) => {
+  try {
+    await prisma.barang.delete({
+      where: { id: req.barangId },
+    });
+    res.redirect("/barang");
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.use((err, req, res, next) => {
+  if (err.code === "P2025") {
+    return res
+      .status(404)
+      .type("text/plain")
+      .send("Barang tidak ditemukan atau sudah dihapus.");
+  }
+  console.error(err.message);
+  res
+    .status(500)
+    .type("text/plain")
+    .send("Operasi gagal. Periksa koneksi dan pesan pada terminal.");
+});
+
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);
 });

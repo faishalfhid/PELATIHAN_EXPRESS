@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit barang</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container mt-5 min-vh-100">
+    <h2>Edit barang</h2>
+    <form action="/barang/edit/<%= b.id %>" method="POST">
+      <label for="nama" class="form-label">Nama barang</label>
+      <input id="nama" type="text" name="nama" required class="form-control mb-2" value="<%= b.nama %>">
+      <label for="harga" class="form-label">Harga dalam rupiah</label>
+      <input id="harga" type="number" name="harga" min="0" max="2147483647" step="1" required class="form-control mb-2" value="<%= b.harga %>">
+      <label for="stok" class="form-label">Stok</label>
+      <input id="stok" type="number" name="stok" min="0" max="2147483647" step="1" required class="form-control mb-2" value="<%= b.stok %>">
+      <button type="submit" class="btn btn-warning">Simpan perubahan</button>
+      <a href="/barang" class="btn btn-danger">Batal</a>
+    </form>
+  </div>
+</body>
+<%- include('partials/footer') %>
+
+</html>

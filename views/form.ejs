@@ -10,7 +10,7 @@
 
 <body>
   <%- include('partials/navbar') %>
-  <div class="container	mt-5">
+  <div class="container	mt-5 min-vh-100">
     <h2>Form tambah data</h2>
     <%	if	(typeof	errors	!==	'undefined'	&&	errors.length)	{	%>
     <div class="alert	alert-danger" role="alert">
@@ -36,5 +36,5 @@
     </form>
   </div>
 </body>
-
+<%- include('partials/footer') %>
 </html>
