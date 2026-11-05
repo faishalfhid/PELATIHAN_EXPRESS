@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Edit karyawan</title>
+  <link rel="stylesheet" href="/css/bootstrap.min.css">
+</head>
+
+<body>
+    <%- include('partials/navbar') %>
+    <div class="container mt-5 min-vh-100">
+    <h2>Edit karyawan</h2>
+    <form action="/karyawan/edit/<%= k.id %>" method="POST">
+      <label for="nama" class="form-label">Nama karyawan</label>
+      <input id="nama" type="text" name="nama" required class="form-control mb-2" value="<%= k.nama %>">
+      <label for="divisi" class="form-label">Nama divisi</label>
+      <input id="divisi" type="text" name="divisi" required class="form-control mb-2" value="<%= k.divisi %>">
+      <button type="submit" class="btn btn-warning">Simpan perubahan</button>
+      <a href="/karyawan" class="btn btn-danger">Batal</a>
+    </form>
+  </div>
+</body>
+<%- include('partials/footer') %>
+
+</html>

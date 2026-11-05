@@ -22,3 +22,10 @@ model Barang {
   stok      Int
   createdAt DateTime @default(now())
 }
+
+model Karyawan {
+  id        Int      @id @default(autoincrement())
+  nama      String
+  divisi    String
+  createdAt DateTime @default(now())
+}

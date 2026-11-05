@@ -48,6 +48,19 @@ function cekIdBarang(req, res, next) {
   req.barangId = id;
   next();
 }
+function cekIdKaryawan(req, res, next) {
+  const id = Number(req.params.id);
+  if (
+    !/^[0-9]+$/.test(req.params.id) ||
+    !Number.isInteger(id) ||
+    id < 1 ||
+    id > 2147483647
+  ) {
+    return res.status(400).type("text/plain").send("ID karyawan tidak valid.");
+  }
+  req.karyawanId = id;
+  next();
+}
 
 app.get("/", (req, res) => {
   const dataPengguna = { namaPengguna: "Faishal Fariz" };
@@ -64,15 +77,6 @@ app.post("/post", (req, res) => {
 
 app.get("/kosongan", (req, res) => {
   res.send("Ini teks aja");
-});
-
-app.get("/karyawan", (req, res) => {
-  const dataKaryawan = [
-    { id: 1, nama: "Budi	Santoso", divisi: "IT" },
-    { id: 2, nama: "Siti	Aminah", divisi: "Finance" },
-    { id: 3, nama: "Agus	Setiawan", divisi: "Marketing" },
-  ];
-  res.render("karyawan", { listKaryawan: dataKaryawan });
 });
 
 app.get("/form", (req, res) => {
@@ -196,6 +200,78 @@ app.use((err, req, res, next) => {
     .status(500)
     .type("text/plain")
     .send("Operasi gagal. Periksa koneksi dan pesan pada terminal.");
+});
+
+app.get("/karyawan/tambah", (req, res) => {
+  res.render("tambah-karyawan");
+});
+
+app.get("/karyawan", async (req, res, next) => {
+  try {
+    const karyawans = await prisma.karyawan.findMany({
+      orderBy: { id: "asc" },
+    });
+    res.render("karyawan", { listKaryawan: karyawans });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post(
+  "/karyawan/tambah",
+  async (req, res, next) => {
+    try {
+      const { nama, divisi } = req.body;
+      await prisma.karyawan.create({
+        data: { nama, divisi },
+      });
+      res.redirect("/karyawan");
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+app.get("/karyawan/edit/:id",cekIdKaryawan, async (req, res, next) => {
+  try {
+    const karyawan = await prisma.karyawan.findUnique({
+      where: { id: req.karyawanId },
+    });
+    if (!karyawan) {
+      return res.status(404).type("text/plain").send("Karyawan tidak ditemukan.");
+    }
+    res.render("edit-karyawan", { k: karyawan });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.post(
+  "/karyawan/edit/:id",
+  cekIdKaryawan,
+  async (req, res, next) => {
+    try {
+      const { nama, divisi } = req.body;
+      await prisma.karyawan.update({
+        where: { id: req.karyawanId },
+        data: { nama, divisi},
+      });
+      res.redirect("/karyawan");
+    } catch (err) {
+      next(err);
+    }
+  },
+);
+
+app.post("/karyawan/hapus/:id", cekIdKaryawan, async (req, res, next) => {
+  try {
+    await prisma.karyawan.delete({
+      where: { id: req.karyawanId },
+    });
+    res.redirect("/karyawan");
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.listen(port, () => {
